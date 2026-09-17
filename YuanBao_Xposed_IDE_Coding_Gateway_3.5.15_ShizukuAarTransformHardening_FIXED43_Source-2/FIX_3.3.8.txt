@@ -1,0 +1,7 @@
+3.3.8 compile fix
+
+Fixed InAppSettings.java transport diagnostics lambda:
+- replaced blank final local `final String d;` with a non-final local `String d` assigned in try/catch
+- retained `final String result=d` for lambda capture
+
+Reason: Java definite-assignment rules can reject assignment to a blank final variable in try/catch because an exception path can make the assignment not definitely unassigned. The lambda only captures `result`, so the non-final temporary is safe.
